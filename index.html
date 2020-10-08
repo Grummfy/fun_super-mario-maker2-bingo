@@ -44,17 +44,25 @@
 			},
 			methods: {
 			  toggleDone: function(item) {
-				  item.clicked = !item.clicked
+				  item.checked = !item.checked
 				  tis.checkBingo();
 			  },
 			  checkBingo: function() {
 				  // TODO
 			  },
 			  getStyle: function(item) {
+				  let style = '';
+				  
 				  if (item.bgColor) {
-					  return 'background-color: ' + item.bgColor;
+					  style += 'background-color: ' + item.bgColor;
 				  }
-				  return '';
+				  
+				  if (item.checked) {
+					  style += 'color: #d6d6d6;';
+					  style += 'background-color: #bf9d4d';
+				  }
+				  
+				  return style;
 			  }
 			}
 		  });
@@ -117,6 +125,7 @@
 						{label: "THX"},
 						{label: "Kill yoshi for free"},
 						{label: "Kill at te end"},
+						{label: "Uno mas"},
 					],
 				multiplayer: [
 						{label: "communication error occured"},
@@ -155,6 +164,13 @@
 
 					let gridSelected = _.sampleSize(bingo, 25);
 					gridSelected = _.shuffle(gridSelected);
+					
+					gridSelected = _.map(gridSelected, function(item) {
+						let newItem = { ...item };
+						newItem.checked = false
+						return newItem;
+					});
+					
 					this.grid = _.chunk(gridSelected, 5);
 				}
 			},
@@ -196,6 +212,8 @@
 			  
 			  overflow: hidden;
 			  text-overflow: ellipsis;
+			  
+			  transition: 0.3s;
 			}
 			
 			.flex-container {
