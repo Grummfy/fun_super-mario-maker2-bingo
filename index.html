@@ -1,0 +1,219 @@
+<html>
+	<head>
+		<title>Super Mario Maker 2 Bingo</title>
+		<script src="https://unpkg.com/lodash"></script>
+		<script src="https://unpkg.com/vue"></script>
+	</head>
+	<body>
+		<script type="text/x-template" id="bingo-template">
+		  <table>
+			<tbody>
+			  <tr v-for="items in grid">
+				<td v-for="item in items" @click="toggleDone(item)" :style="getStyle(item)">
+				  {{ item.label }}
+				</td>
+			  </tr>
+			</tbody>
+		  </table>
+		</script>
+
+		<div class="flex-container">
+			<div id="bingo">
+				<h1>Super Mari Maker <span style="color: #E80115">2</span></h1>
+				<h2>Bingo</h2>
+				
+				<div id="bingo-config">
+					<label for="multiplayer">
+						<input id="multiplayer" type="checkbox" :value="levelConfiguration.multiplayer" />
+						Multiplayer
+					</label>
+					<button @click="newGame">
+						New Game!
+					</button>
+				</div>
+				
+				<bingo :grid="grid" v-if="grid.length > 0"></bingo>
+			</div>
+		</div>
+		<script>
+		  // register component
+		  Vue.component("bingo", {
+			template: "#bingo-template",
+			props: {
+			  grid: Array
+			},
+			methods: {
+			  toggleDone: function(item) {
+				  item.clicked = !item.clicked
+				  tis.checkBingo();
+			  },
+			  checkBingo: function() {
+				  // TODO
+			  },
+			  getStyle: function(item) {
+				  if (item.bgColor) {
+					  return 'background-color: ' + item.bgColor;
+				  }
+				  return '';
+			  }
+			}
+		  });
+
+		  var myBingo = new Vue({
+			el: "#bingo",
+			data: {
+				levelConfiguration: {
+					multiplayer: false,
+				},
+				grid: [],
+				bingoData: {
+					singleplayer: [
+						// https://i.imgur.com/y1Rg8Y8.png
+						{label: "enemy spam"},
+						{label: "sound effects everywhere"},
+						{label: "bring yoshi to the goal"},
+						{label: "tech level"},
+						{label: "pick a door / pipe"},
+						{label: "1-1 remake"},
+						{label: "collect all coins"},
+						{label: "music level"},
+						{label: "softlock with no way of dying"},
+						{label: "infinite fire flower boss fight"},
+						{label: "no checkpoints (without clear condition)"},
+						{label: "enemy spam (with star)"},
+						{label: "free", bgColor: "#FFFFFF"},
+						{label: "good level"},
+						{label: "builder / superball level"},
+						{label: "themed after another game"},
+						{label: "kaizo blocks"},
+						{label: "level can be cheesed"},
+						{label: "auto mario level"},
+						{label: "“first level in title”"},
+						{label: "meowser or boom-boom"},
+						{label: "title level"},
+						{label: "terribly named level"},
+						{label: "kills mario at start"},
+						{label: "on/off blocks"},
+						
+						// extra
+						{label: "troll level"},
+						{label: "#DGR"},
+						{label: "super mario bros remake level"},
+						{label: "little timmy level"},
+						{label: "first clear"},
+						{label: "world record"},
+						{label: "multi player themed"},
+						{label: "kaizo level"},
+						{label: "bean burrito level"},
+						{label: "speed run"},
+						{label: "link power"},
+						{label: "my first level"},
+						{label: "version X of the level"},
+						{label: "tutorial level"},
+						{label: "car level"},
+						{label: "dev route"},
+						{label: "title in Japanese"},
+						{label: "search after a kaizo block to win"},
+						{label: "THX"},
+						{label: "Kill yoshi for free"},
+						{label: "Kill at te end"},
+					],
+				multiplayer: [
+						{label: "communication error occured"},
+						{label: "lag"},
+						{label: "lag free"},
+						{label: "kill someone"},
+						{label: "stole victory condition"},
+						{label: "stole somebody's power up"},
+						{label: "everyone end at flag"},
+						{label: "beat an S+ ranked player"},
+						{label: "someone wait at flag"},
+						{label: "played 3 times the same character in arow"},
+						{label: "boss fight"},
+						{label: "being carried by someone"},
+						{label: "kill someone with a shell"},
+						{label: "throw someone in a hole"},
+						{label: "throw someone at an enemy"},
+						{label: "someone block door/pipe"},
+						{label: "on/off switch spam"},
+					],
+				},
+			},
+			methods: {
+				newGame: function() {
+					this.grid = [];
+					
+					// take 25 element randomly
+					let bingo = this.bingoData.singleplayer;
+					if (this.levelConfiguration.multiplayer) {
+						bingo = this.bingoData.multiplayer;	
+						if (bingo.length < 25) {
+							// complete bingo with single player
+							bingo = _.union(bingo, _.sampleSize(this.bingoData, 25 - bingo.length));
+						}
+					}
+
+					let gridSelected = _.sampleSize(bingo, 25);
+					gridSelected = _.shuffle(gridSelected);
+					this.grid = _.chunk(gridSelected, 5);
+				}
+			},
+		  });
+		</script>
+		<style>
+			@font-face {
+				font-family: "Super-Mario-Maker-Font";
+				src: url("Super Mario Maker Font.ttf") format("truetype");
+			}
+			body {
+			  font-family: Super-Mario-Maker-Font, Helvetica Neue, Arial, sans-serif;
+			  font-size: 14px;
+			  color: #444;
+				background-color: #FFD302;
+			}
+			
+			h1, h2 {
+				text-align: center
+			}
+			
+
+			table {
+			  border: 2px solid #000000;
+			  border-collapse: collapse;
+			  table-layout: auto;
+			  max-width: 600px;
+			}
+
+			table td {
+			  border: 2px solid #000000;
+			  background-color: #FFE9B7;
+			  height: 4em;
+			  width: 20%;
+			  padding: 0.2em;
+			  
+			  text-align: center;
+			  vertical-align: middle;
+			  
+			  overflow: hidden;
+			  text-overflow: ellipsis;
+			}
+			
+			.flex-container {
+				display: flex;
+				justify-content: center;
+				min-height: 100vh;
+				align-items: center;
+			}
+			
+			#bingo-config {
+				margin-bottom: 1rem;
+			}
+		</style>
+		
+		<footer>
+			DGR ask it in <a href="https://www.youtube.com/watch?v=iI-OLOuRn5w">his video</a><br />
+			font from : https://famfonts.com/super-mario-maker/<br />
+			Made By <a href="https://twitter.com/Grummfy">Grummfy </a> - change it <a href="">on github</a>
+		</footer>
+	</body>
+</html>
