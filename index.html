@@ -1,5 +1,7 @@
+<!doctype html>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<title>Super Mario Maker 2 Bingo</title>
 		<script src="https://unpkg.com/lodash"></script>
 		<script src="https://unpkg.com/vue"></script>
@@ -45,21 +47,21 @@
 			methods: {
 			  toggleDone: function(item) {
 				  item.checked = !item.checked
-				  tis.checkBingo();
+				  this.checkBingo();
 			  },
 			  checkBingo: function() {
 				  // TODO
 			  },
 			  getStyle: function(item) {
-				  let style = '';
+				  let style = 'text-transform: uppercase; ';
 				  
 				  if (item.bgColor) {
-					  style += 'background-color: ' + item.bgColor;
+					  style += 'background-color: ' + item.bgColor + ' ';
 				  }
 				  
 				  if (item.checked) {
-					  style += 'color: #d6d6d6;';
-					  style += 'background-color: #bf9d4d';
+					  style += 'color: #d6d6d6; ';
+					  style += 'background-color: #bf9d4d; ';
 				  }
 				  
 				  return style;
@@ -71,7 +73,10 @@
 			el: "#bingo",
 			data: {
 				levelConfiguration: {
+					// add multiplayer value
 					multiplayer: false,
+					// grid size 
+					size: 5,
 				},
 				grid: [],
 				bingoData: {
@@ -89,7 +94,6 @@
 						{label: "infinite fire flower boss fight"},
 						{label: "no checkpoints (without clear condition)"},
 						{label: "enemy spam (with star)"},
-						{label: "free", bgColor: "#FFFFFF"},
 						{label: "good level"},
 						{label: "builder / superball level"},
 						{label: "themed after another game"},
@@ -155,17 +159,19 @@
 				newGame: function() {
 					this.grid = [];
 					
-					// take 25 element randomly
+					let numberOfElements = Math.pow(this.levelConfiguration.size, 2) - 1;
+					
+					// take numberOfElements element randomly
 					let bingo = this.bingoData.singleplayer;
 					if (this.levelConfiguration.multiplayer) {
 						bingo = this.bingoData.multiplayer;	
-						if (bingo.length < 25) {
+						if (bingo.length < numberOfElements) {
 							// complete bingo with single player
-							bingo = _.union(bingo, _.sampleSize(this.bingoData, 25 - bingo.length));
+							bingo = _.union(bingo, _.sampleSize(this.bingoData, numberOfElements - bingo.length));
 						}
 					}
 
-					let gridSelected = _.sampleSize(bingo, 25);
+					let gridSelected = _.sampleSize(bingo, numberOfElements);
 					gridSelected = _.shuffle(gridSelected);
 					
 					gridSelected = _.map(gridSelected, function(item) {
@@ -174,7 +180,9 @@
 						return newItem;
 					});
 					
-					this.grid = _.chunk(gridSelected, 5);
+					// inject middle free cell. Middle will be at index "numberOfElements / 2" (so if 25 elements => 24 / 2 => index 12 (position 13 in the index))
+					gridSelected.splice(numberOfElements / 2, 0, {label: "free", bgColor: "#FFFFFF", checked: false});
+					this.grid = _.chunk(gridSelected, this.levelConfiguration.size);
 				}
 			},
 		  });
