@@ -12,8 +12,14 @@ Except the font, because the font came from : https://famfonts.com/super-mario-m
 
 ## Alternative
 
-* [https://github.com/savvasdalkitsis/smm2-bingo/](https://github.com/savvasdalkitsis/smm2-bingo/)
+### Opensource
+
+* [https://github.com/savvasdalkitsis/smm2-bingo/](https://github.com/savvasdalkitsis/smm2-bingo/) - [demo](https://savvasdalkitsis.github.io/smm2-bingo/)
+* [https://github.com/lilleaila/mariobingo/](https://github.com/lilleaila/mariobingo/) - [demo](https://lilleaila.github.io/mariobingo/)
+* [https://editor.p5js.org/smey/sketches/s5bMgvSPh](https://editor.p5js.org/smey/sketches/s5bMgvSPh) - [demo](https://editor.p5js.org/smey/full/s5bMgvSPh)
+
+### Other
+
 * [https://smm2bingo.com/](https://smm2bingo.com/)
-* [https://bingobaker.com/play/b530c52e52f0221c](https://bingobaker.com/play/b530c52e52f0221c)
 * [https://www.mm2bingo.com/](https://www.mm2bingo.com/)
-* [https://github.com/lilleaila/mariobingo/](https://github.com/lilleaila/mariobingo/)
+* [https://bingobaker.com/play/b530c52e52f0221c](https://bingobaker.com/play/b530c52e52f0221c)
