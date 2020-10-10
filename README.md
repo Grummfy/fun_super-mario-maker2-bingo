@@ -23,4 +23,4 @@ Except the font, because the font came from : https://famfonts.com/super-mario-m
 * [https://smm2bingo.com/](https://smm2bingo.com/)
 * [https://www.mm2bingo.com/](https://www.mm2bingo.com/)
 * [https://bingobaker.com/play/b530c52e52f0221c](https://bingobaker.com/play/b530c52e52f0221c)
-* [https://grumbply-snake.itch.io/bingomaker2?secret=N0LX8Mm4dcY9DO1BKwp4TG1NRCY](https://grumbply-snake.itch.io/bingomaker2?secret=N0LX8Mm4dcY9DO1BKwp4TG1NRCY)
+* [https://grumbply-snake.itch.io/bingomaker2](https://grumbply-snake.itch.io/bingomaker2)
